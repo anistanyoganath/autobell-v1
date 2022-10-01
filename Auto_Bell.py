@@ -66,7 +66,7 @@ def loginpage(command=None):
      Are you sure want to Ring?     ''',icon='warning')
                     if msg_box=='yes':
                         listbox_index('unshedule','Unsheduled Bell.') 
-                        play(audios[0])
+                        play(audios['manual-bell'])
                         with open('IM_Bells' + '.dll',"a+") as file_object:
                             file_object.write('On '+(time.strftime('%c')+' Rang by '+(user_var.get()).upper()+'\n'))
                 else:
@@ -698,7 +698,23 @@ def manual_bell(audio,item,text):
     manual_bell_button.destroy()
         
 #audios
-audios=['Sources/sounds/0.wav','Sources/sounds/1.wav','Sources/sounds/2.wav','Sources/sounds/3.wav','Sources/sounds/4.wav','Sources/sounds/5.wav','Sources/sounds/6.wav','Sources/sounds/7.wav','Sources/sounds/8.wav','Sources/sounds/9.wav','Sources/sounds/10.wav','Sources/sounds/11.wav','Sources/sounds/12.wav','Sources/sounds/13.wav']
+#audios=['Sources/sounds/0.wav','Sources/sounds/1.wav','Sources/sounds/2.wav','Sources/sounds/3.wav','Sources/sounds/4.wav','Sources/sounds/5.wav','Sources/sounds/6.wav','Sources/sounds/7.wav','Sources/sounds/8.wav','Sources/sounds/9.wav','Sources/sounds/10.wav','Sources/sounds/11.wav','Sources/sounds/12.wav','Sources/sounds/13.wav']
+audios = {
+    'manual-bell' : 'Sources/sounds/manual-bell.wav',
+    'assembly': 'Sources/sounds/assembly.wav',
+    'period-1': 'Sources/sounds/period-1.wav',
+    'period-2': 'Sources/sounds/period-2.wav',
+    'period-3': 'Sources/sounds/period-3.wav',
+    'period-4': 'Sources/sounds/period-4.wav',
+    'interval': 'Sources/sounds/interval.wav',
+    'period-5': 'Sources/sounds/period-5.wav',
+    'period-6': 'Sources/sounds/period-6.wav',
+    'period-7': 'Sources/sounds/period-7.wav',
+    'period-8': 'Sources/sounds/period-8.wav',
+    'sweeping': 'Sources/sounds/sweeping.wav',
+    'end-prayer': 'Sources/sounds/end-prayer.wav',
+    'final-bell': 'Sources/sounds/final-bell.wav'
+}
 def play(audio1):
     playback._play_with_simpleaudio(AudioSegment.from_wav(audio1))
 activity_listbox=ttk.Treeview(root)
@@ -727,7 +743,7 @@ def function():
     nxtpre()
     current_time =strftime("%H:%M:%S") 
     if assembly_time+':00' == current_time:
-        play(audios[1])
+        play(audios['assembly'])
         listbox_index('assm','Morning Assembly.')       
         if period1=='Manual':
             manual_bell_button.config(command=lambda:(manual_bell(13,'final',' God Bless You!')))
@@ -735,46 +751,46 @@ def function():
         
     #1stPeriod
     elif period1+':00'==current_time:
-        play(audios[2])    
+        play(audios['period-1'])    
         listbox_index('p1','Period-01.')                
     elif period2+':00' == current_time:
-        play(audios[3])
+        play(audios['period-2'])
         
         listbox_index('p2','Period-02.')         
     elif period3+':00' == current_time:
-        play(audios[4])
+        play(audios['period-3'])
         
         listbox_index('p3','Period-03.')
     elif period4+':00' == current_time:
-        play(audios[5])
+        play(audios['period-4'])
         listbox_index('p4','Period-04.')
     elif interval+':00' == current_time:
         listbox_index('interval','Interval bells.')
              
-        play(audios[6])
+        play(audios['interval'])
     elif period5+':00' == current_time:
-        play(audios[7])
+        play(audios['period-5'])
         
         listbox_index('p5','Period-05.')
     elif period6+':00' == current_time:
-        play(audios[8])
+        play(audios['period-6'])
         
         listbox_index('p6','Period-06.')         
     elif period7+':00' == current_time:
-        play(audios[9])
+        play(audios['period-7'])
         
         listbox_index('p7','Period-07.')
         
     elif period8+':00' == current_time:
-        play(audios[10])
+        play(audios['period-8'])
         listbox_index('p8','Period-08.')    
     elif sweep+':00' == current_time:
-        play(audios[11])
+        play(audios['sweeping'])
         listbox_index('clean',"Cleaning Bell.")  
     elif end_prayer+':00' == current_time:
         listbox_index('last',"Last Prayer.")
-        play(audios[12])
-        manual_bell_button.config(command=lambda:(manual_bell(13,'final',' God Bless You!')))
+        play(audios['end-prayer'])
+        manual_bell_button.config(command=lambda:(manual_bell('final-bell','final',' God Bless You!')))
         manual_bell_button.place(x=820,y=340)    
     root.after(1000,function)
 function()
